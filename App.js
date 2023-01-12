@@ -8,16 +8,12 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+// API endpoint
 const rootEndpoint = "https://api.punkapi.com/v2";
-
-const headers = {
-  "Content-Type": "application/json",
-  Accept: "application/json",
-};
 
 // fetch API for a random beer
 const fetchRandomBeer = async () => {
-  const response = await fetch(`${rootEndpoint}/beers/random`, { headers });
+  const response = await fetch(`${rootEndpoint}/beers/random`);
   const beers = await response.json();
   // Access first element of returned beer array
   return beers[0];
@@ -50,6 +46,7 @@ export default App = () => {
 
   // The empty array [] prevents the effect from running at each re-render
   useEffect(() => {
+    // More details; https://www.robinwieruch.de/react-hooks-fetch-data/
     loadBeer();
   }, []);
 
@@ -89,7 +86,6 @@ export default App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
     margin: 30,
   },
