@@ -15,15 +15,7 @@ const headers = {
   Accept: "application/json",
 };
 
-// Fetch a random beer from API
-const getRandommBeer = () =>
-  fetch(`${rootEndpoint}/beers/random`, { headers })
-    .then((response) => response.json())
-    .then((beers) => beers[0]) // Access first element of returned array
-    .catch((error) => {
-      console.error(error);
-    });
-
+// fetch API for a random beer
 const fetchRandomBeer = async () => {
   const response = await fetch(`${rootEndpoint}/beers/random`, { headers });
   const beers = await response.json();
@@ -32,21 +24,33 @@ const fetchRandomBeer = async () => {
 };
 
 export default App = () => {
+  // Define state
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [beerName, setBeerName] = useState("");
   const [beerDescription, setBeerDescription] = useState("");
 
-  useEffect(() => {
-    const getBeer = async () => {
+  // Load a new beer
+  const loadBeer = async () => {
+    setLoading(true);
+    setError(false);
+
+    try {
       const beer = await fetchRandomBeer();
 
       // Update state
       setBeerName(beer.name);
       setBeerDescription(beer.description);
-      setLoading(false);
-    };
+    } catch (e) {
+      setError(true);
+    }
 
-    getBeer();
+    setLoading(false);
+  };
+
+  // The empty array [] prevents the effect from running at each re-render
+  useEffect(() => {
+    loadBeer();
   }, []);
 
   if (loading) {
@@ -57,12 +61,25 @@ export default App = () => {
     );
   }
 
+  if (error) {
+    return (
+      <View style={styles.container}>
+        <Text>Something went wrong :\</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.name}>{beerName}</Text>
       <Text style={styles.description}>{beerDescription}</Text>
       {/* Add a button to fetch another beer */}
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          loadBeer();
+        }}
+      >
         <Text>Grab a new beer!</Text>
       </TouchableOpacity>
     </View>
@@ -74,6 +91,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    margin: 30,
   },
   name: {
     fontSize: 18,
