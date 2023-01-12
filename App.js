@@ -38,14 +38,14 @@ export default App = () => {
   if (loading) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator animating={true} />
+        <ActivityIndicator size="large" />
       </View>
     );
   }
 
   if (error) {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, { alignItems: "center" }]}>
         <Text>Something went wrong :\</Text>
       </View>
     );
