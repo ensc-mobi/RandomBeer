@@ -1,23 +1,8 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ActivityIndicator,
-  TouchableOpacity,
-} from "react-native";
-
-// API endpoint
-const rootEndpoint = "https://api.punkapi.com/v2";
-
-// fetch API for a random beer
-const fetchRandomBeer = async () => {
-  const response = await fetch(`${rootEndpoint}/beers/random`);
-  const beers = await response.json();
-  // Access first element of returned beer array
-  return beers[0];
-};
+import { Text, View, ActivityIndicator, TouchableOpacity } from "react-native";
+import styles from "./theme/styles";
+import fetchRandomBeer from "./api/punkapi";
 
 export default App = () => {
   // Define state
@@ -82,27 +67,3 @@ export default App = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    margin: 30,
-  },
-  name: {
-    fontSize: 18,
-    fontWeight: "700",
-    marginBottom: 10,
-  },
-  description: {
-    marginBottom: 10,
-  },
-  button: {
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 3,
-    padding: 5,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
