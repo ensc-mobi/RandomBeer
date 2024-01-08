@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { Text, View, ActivityIndicator, TouchableOpacity } from "react-native";
-import styles from "./theme/styles";
-import fetchRandomBeer from "./api/punkapi";
+import { useState, useEffect } from "react";
+import '../styles/App.css';
+import fetchRandomBeer from "../services/punkapi";
 
-export default App = () => {
+function App() {
+
   // Define state
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [beerName, setBeerName] = useState("");
+  const [beerImage, setBeerImage] = useState("");
   const [beerDescription, setBeerDescription] = useState("");
 
   // Load a new beer
@@ -21,6 +21,7 @@ export default App = () => {
 
       // Update state
       setBeerName(beer.name);
+      setBeerImage(beer.image_url);
       setBeerDescription(beer.description);
     } catch (e) {
       setError(true);
@@ -37,33 +38,39 @@ export default App = () => {
 
   if (loading) {
     return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" />
-      </View>
+      <div>
+        <p>Loading…</p>
+      </div>
     );
   }
 
   if (error) {
     return (
-      <View style={[styles.container, { alignItems: "center" }]}>
-        <Text>Something went wrong :\</Text>
-      </View>
+      <div>
+        <p>Something went wrong :\</p>
+      </div>
     );
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.name}>{beerName}</Text>
-      <Text style={styles.description}>{beerDescription}</Text>
+    <div className="App">
+      <h1>{beerName}</h1>
+      <div className="Description">
+        <img className="DescriptionImage" src={beerImage} alt={beerName} />
+        <p className="DescriptionText">{beerDescription}</p>
+      </div>
+
       {/* Add a button to fetch another beer */}
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
+      <div className="Button"
+        onClick={() => {
           loadBeer();
         }}
       >
-        <Text>Grab a new beer!</Text>
-      </TouchableOpacity>
-    </View>
+        <p >Grab a new beer!</p>
+      </div>
+    </div>
   );
-};
+  
+}
+
+export default App;
