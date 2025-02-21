@@ -1,12 +1,12 @@
 // endpoint
-const rootEndpoint = "https://api.punkapi.com/v2";
+const rootEndpoint = "https://punkapi.online/v3";
 
 // fetch for a random beer
-const fetchRandomBeer = async () => {
+export const fetchRandomBeer = async () => {
   const response = await fetch(`${rootEndpoint}/beers/random`);
-  const beers = await response.json();
+  const beer = await response.json();
   // Access first element of returned beer array
-  return beers[0];
+  return beer;
 };
 
-export default fetchRandomBeer;
+export const getImageUrl = (image) => `${rootEndpoint}/images/${image}`;

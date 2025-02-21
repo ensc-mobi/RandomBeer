@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import '../styles/App.css';
-import fetchRandomBeer from "../services/punkapi";
+import { fetchRandomBeer, getImageUrl } from "../services/punkapi";
 
 function App() {
 
@@ -21,7 +21,7 @@ function App() {
 
       // Update state
       setBeerName(beer.name);
-      setBeerImage(beer.image_url);
+      setBeerImage(getImageUrl(beer.image));
       setBeerDescription(beer.description);
     } catch (e) {
       setError(true);
