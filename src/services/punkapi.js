@@ -1,5 +1,5 @@
 // endpoint
-const rootEndpoint = "https://punkapi.online/v3";
+const rootEndpoint = "https://punkapi-alxiw.amvera.io/v3";
 
 // fetch for a random beer
 export const fetchRandomBeer = async () => {
